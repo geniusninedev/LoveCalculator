@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_app_store"
+                android:icon="@mipmap/ic_apps_black_24dp"
+                android:title="App Store" />
+            <item
+                android:id="@+id/nav_post_app"
+                android:icon="@mipmap/ic_local_post_office_black_24dp"
+                android:title="Get your own app" />
+            <item
+                android:id="@+id/nav_rateus"
+                android:icon="@mipmap/ic_star_rate_black_18dp"
+                android:title="Rate us and Leave Feedback" />
+
+        </menu>
+    </item>
+
+</menu>
