@@ -16,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -46,7 +48,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity
+public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -74,13 +76,53 @@ public class MainActivity extends AppCompatActivity
     //User for Facebook data
     private UserFacebookData userFacebookData;
 
+    EditText editTextYourName,editTextParnerName;
+    Button btnCalculateLove;
+    TextView textViewResult;
+    Love_Calculator love_calculator;
+    String yourname,partnername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        editTextYourName=(EditText)findViewById(R.id.editTextyourName);
+        editTextParnerName=(EditText)findViewById(R.id.editTextpartnerName);
+
+        btnCalculateLove=(Button)findViewById(R.id.btnCalculateLove);
+        textViewResult=(TextView)findViewById(R.id.textViewResult);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         mRef = FirebaseDatabase.getInstance().getReference().child("LoveCalculator").child("Users");
+
+        btnCalculateLove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (TextUtils.isEmpty(editTextYourName.getText().toString().trim())) {
+                    editTextYourName.setError("Enter the Your Name");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(editTextParnerName.getText().toString().trim())) {
+                    editTextParnerName.setError("Enter Partner Name ");
+                    return;
+                }
+
+
+                yourname=editTextYourName.getText().toString().trim();
+                partnername=editTextParnerName.getText().toString().trim();
+                love_calculator=new Love_Calculator(yourname,partnername);
+                int lovepercent=love_calculator.CalculateLove();
+                textViewResult.setText(String.valueOf("The Love Between " +yourname+ "  and  " +   partnername  +  lovepercent  + " % "));
+            }
+        });
+
 
 
 
@@ -108,7 +150,6 @@ public class MainActivity extends AppCompatActivity
 
         textViewName = (TextView)header.findViewById(R.id.textViewName);
         textViewEmail = (TextView)header.findViewById(R.id.textViewEmail);
-
 
                 String name = firebaseAuth.getCurrentUser().getDisplayName();
                 String email = firebaseAuth.getCurrentUser().getEmail();
