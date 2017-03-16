@@ -89,6 +89,8 @@ public class  MainActivity extends AppCompatActivity
 
 
 
+        mRef = FirebaseDatabase.getInstance().getReference().child("LoveCalculator").child("Users");
+
         editTextYourName=(EditText)findViewById(R.id.editTextyourName);
         editTextParnerName=(EditText)findViewById(R.id.editTextpartnerName);
 
@@ -96,9 +98,7 @@ public class  MainActivity extends AppCompatActivity
         textViewResult=(TextView)findViewById(R.id.textViewResult);
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("LoveCalculator").child("Users");
 
         btnCalculateLove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +125,6 @@ public class  MainActivity extends AppCompatActivity
 
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -137,6 +136,9 @@ public class  MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -151,16 +153,18 @@ public class  MainActivity extends AppCompatActivity
         textViewName = (TextView)header.findViewById(R.id.textViewName);
         textViewEmail = (TextView)header.findViewById(R.id.textViewEmail);
 
-                String name = firebaseAuth.getCurrentUser().getDisplayName();
-                String email = firebaseAuth.getCurrentUser().getEmail();
+                String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
                 textViewName.setText(name);
                 textViewEmail.setText(email);
 
 
         authenticate();
+
         //uploadContactsToAzure();
         testContactUpload();
+
     }
 
 
