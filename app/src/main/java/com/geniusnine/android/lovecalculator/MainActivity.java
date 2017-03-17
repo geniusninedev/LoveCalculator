@@ -1,6 +1,7 @@
 package com.geniusnine.android.lovecalculator;
 
 import android.*;
+import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,8 +29,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -81,7 +84,10 @@ public class  MainActivity extends AppCompatActivity
     TextView textViewResult;
     Love_Calculator love_calculator;
     String yourname,partnername;
+   // showDialog(DIALOG_LOADING);
 
+
+    public static final int DIALOG_LOADING = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,16 +102,17 @@ public class  MainActivity extends AppCompatActivity
 
         btnCalculateLove=(Button)findViewById(R.id.btnCalculateLove);
         textViewResult=(TextView)findViewById(R.id.textViewResult);
-
-
+      // mprogressBar =  new ProgressDialog(this);
 
 
         btnCalculateLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
+
                 if (TextUtils.isEmpty(editTextYourName.getText().toString().trim())) {
-                    editTextYourName.setError("Enter the Your Name");
+                    editTextYourName.setError("Enter Your Name");
                     return;
                 }
 
@@ -115,11 +122,15 @@ public class  MainActivity extends AppCompatActivity
                 }
 
 
+
+
                 yourname=editTextYourName.getText().toString().trim();
                 partnername=editTextParnerName.getText().toString().trim();
                 love_calculator=new Love_Calculator(yourname,partnername);
                 int lovepercent=love_calculator.CalculateLove();
-                textViewResult.setText(String.valueOf("The Love Between " +yourname+ "  and  " +   partnername  +  lovepercent  + " % "));
+                textViewResult.setText(String.valueOf("The Love Between " +yourname+ "  and  " +   partnername  +" is " +  lovepercent  + " % "));
+
+
             }
         });
 
@@ -150,14 +161,6 @@ public class  MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header=navigationView.getHeaderView(0);
 
-        textViewName = (TextView)header.findViewById(R.id.textViewName);
-        textViewEmail = (TextView)header.findViewById(R.id.textViewEmail);
-
-                String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-                textViewName.setText(name);
-                textViewEmail.setText(email);
 
 
         authenticate();
@@ -281,6 +284,7 @@ public class  MainActivity extends AppCompatActivity
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
+                    finish();
 
 
                 }
@@ -370,11 +374,22 @@ public class  MainActivity extends AppCompatActivity
             } catch (android.content.ActivityNotFoundException anfe) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
-        }/*else if (id == R.id.nav_feedback) {
-            Intent intent = new Intent(MainActivity.this, UserFeedback.class);
+        }else if (id == R.id.nav_quotes) {
+            Intent intent = new Intent(MainActivity.this, ProposeDaySmsandQuotes.class);
             startActivity(intent);
 
-        }*/
+        }
+
+        else if (id == R.id.nav_sadquotes) {
+            Intent intent = new Intent(MainActivity.this, Sad.class);
+            startActivity(intent);
+
+        }
+        else if (id == R.id.nav_breakup) {
+            Intent intent = new Intent(MainActivity.this, BreakUp.class);
+            startActivity(intent);
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

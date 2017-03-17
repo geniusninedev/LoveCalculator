@@ -11,39 +11,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.geniusnine.android.lovecalculator.LoginActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/romantic">
 
     <ImageView
         android:layout_width="wrap_content"
         android:id="@+id/imageView2"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true" />
 
     <TextView
-        android:text="हरवलेल्या वस्तूही सापडू शकतात.
-पण, एकच गोष्ट अशी आहे की जी एकदा हातातून निसटली की,
-कोणत्याही उपायानं पुन्हा मिळू शकत नाही..
-आणि ती असते.. आपलं आयुष्य..
-    म्हणूनच.. ....मनसोक्त जगा !!! "
+        android:text="मेरी मोहब्बत #की हद ना तय कर पाओगे तुम,
+तुम्हें साँसों से भी ज्यादा मोहब्बत #करते है हम. "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView4"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:layout_above="@+id/login_button"
 
-        android:layout_marginBottom="56dp"
-        android:layout_weight="0.37" />
+        android:layout_marginBottom="30dp"
+        android:layout_weight="0.22" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </LinearLayout>

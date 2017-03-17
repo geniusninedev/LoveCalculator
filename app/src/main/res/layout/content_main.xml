@@ -7,47 +7,63 @@
     android:orientation="vertical"
     tools:context="com.geniusnine.android.lovecalculator.MainActivity"
     android:weightSum="2"
-    android:background="@drawable/letter"  >
+    android:background="@drawable/letter"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
-    <LinearLayout
+
+            android:weightSum="1">
+        <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+            >
 
         <TextView
             android:text="Your Name"
-
+    android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:gravity="center"
-            android:textColor="#fdfcfc"
+            android:textColor="#000000"
             android:layout_gravity="center"
             android:layout_weight="0.05"
-            android:textSize="23dp"/>
+            android:textSize="30dp"/>
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:layout_marginTop="10dp"
             android:gravity="center"
+
             android:layout_gravity="center"
             android:background="@android:drawable/editbox_background"
             android:layout_weight="0.05"
             android:id="@+id/editTextyourName"
-            android:hint="Enter Your Name" />
+            android:hint="Enter Your Name"
+            android:textColorHint="@color/colorPrimary"/>
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:weightSum="1">
+
+        android:weightSum="1"
+        android:layout_weight="6.40">
 
         <TextView
             android:text="Partner Name"
@@ -55,31 +71,36 @@
             android:layout_weight="0.05"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:textSize="23dp"
+            android:textSize="30dp"
             android:gravity="center"
-            android:textColor="#f50a16"
+            android:textColor="#000000"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:id="@+id/textviewPartner" />
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
+            android:layout_marginTop="10dp"
             android:gravity="center"
+
+            android:layout_gravity="center"
             android:background="@android:drawable/editbox_background"
             android:layout_weight="0.05"
-            android:layout_marginTop="10dp"
             android:id="@+id/editTextpartnerName"
+            android:textColorHint="@color/colorPrimary"
             android:hint="Enter Partner Name" />
 
         <Button
-            android:text="Test"
+            android:text="Calculate"
             android:layout_marginTop="50dp"
-            android:layout_width="130dp"
+            android:layout_width="150dp"
             android:layout_gravity="center"
             android:background="@drawable/edittext_background"
+            android:fontFamily="cursive"
+            android:textColor="#FFFFFF"
             android:layout_height="wrap_content"
             android:id="@+id/btnCalculateLove" />
 
@@ -87,14 +108,15 @@
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#fd0303"
+            android:textColor="#000000"
             android:textSize="20dp"
-            android:background="@android:drawable/editbox_background"
+
             android:id="@+id/textViewResult"
             android:layout_weight="0.04" />
 
 
     </LinearLayout>
+</LinearLayout>
 
-
+    </ScrollView>
 </LinearLayout>
