@@ -1,8 +1,13 @@
 package com.geniusnine.android.lovecalculator;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +23,6 @@ import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 public class RequestApp extends AppCompatActivity {
-
     private OrderApp orderApp;
     private EditText editTextdevice;
     private EditText editTextOS;
@@ -33,12 +37,17 @@ public class RequestApp extends AppCompatActivity {
     private MobileServiceClient mobileServiceClientOrderApp;
     private MobileServiceTable<OrderApp> mobileServiceTableOrderApp;
     private FirebaseAuth firebaseAuth;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_app);
+      /*  Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("Rate Us");*/
+
+
         editTextdevice = (EditText)findViewById(R.id.editTextDevice);
         editTextOS = (EditText)findViewById(R.id.editTextOS);
         editTextApplication = (EditText)findViewById(R.id.editTextApplication);
@@ -50,20 +59,43 @@ public class RequestApp extends AppCompatActivity {
         buttonGetQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initializeAzureTable();
-                uploadOrder();
+                String MobileNumberpattern = "[0-9]{10}";
+                String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(editTextdevice.getText().toString().trim().equals("")){
+                    editTextdevice.setError("Device Required");
+                }else if(editTextOS.getText().toString().trim().equals("")){
+                    editTextOS.setError("OS Required");
+                }else if(editTextApplication.getText().toString().trim().equals("")){
+                    editTextApplication.setError("Application Type Required");
+                }else if(editTextIndustry.getText().toString().trim().equals("")){
+                    editTextIndustry.setError("Industry Required");
+                }else if(editTextAppDescription.getText().toString().trim().equals("")){
+                    editTextAppDescription.setError("Short Description Required");
+                }else if(editTextPhoneNumber.getText().toString().trim().equals("")){
+                    editTextPhoneNumber.setError("Phone Number Required");
+                }else if(!editTextPhoneNumber.getText().toString().trim().matches(MobileNumberpattern)){
+                    editTextPhoneNumber.setError("Please Enter Valid Mobile Number");
+                }
+                else if(editTextContactEmail.getText().toString().trim().equals("")) {
+                    editTextContactEmail.setError("Email Required");
+                } else if(!editTextContactEmail.getText().toString().trim().matches(emailpattern)){
+                    editTextContactEmail.setError("Please Enter Valid Email");
+                }
+                else {
+                    initializeAzureTable();
+                    uploadOrder();
+                }
             }
         });
 
 
+
     }
-
-
     private void initializeAzureTable() {
         try {
             mobileServiceClientOrderApp = new MobileServiceClient(
                     getString(R.string.web_address),
-                    this);
+                    RequestApp.this);
             mobileServiceClientOrderApp.setAndroidHttpClientFactory(new OkHttpClientFactory() {
                 @Override
                 public OkHttpClient createOkHttpClient() {
@@ -111,5 +143,41 @@ public class RequestApp extends AppCompatActivity {
             Log.e("feedback ", e.toString());
         }
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                Intent intent=new Intent(RequestApp.this,MainActivity.class);
+                finish();
+                startActivity(intent);
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    //used this when mobile orientaion is changed
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 }

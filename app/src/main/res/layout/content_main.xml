@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:layout_gravity="center"
             android:layout_weight="0.05"
             android:textSize="30dp"/>
@@ -54,8 +54,6 @@
             android:textColorHint="@color/colorPrimary"/>
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -110,7 +108,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="20dp"
-
+            android:background="@android:drawable/editbox_background"
             android:id="@+id/textViewResult"
             android:layout_weight="0.04" />
 

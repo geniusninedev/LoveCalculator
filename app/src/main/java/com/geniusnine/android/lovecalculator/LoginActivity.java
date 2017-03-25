@@ -1,10 +1,12 @@
 package com.geniusnine.android.lovecalculator;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,53 +26,31 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
-import com.microsoft.windowsazure.mobileservices.http.OkHttpClientFactory;
-import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
-import com.squareup.okhttp.OkHttpClient;
+
 
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDataBase;
-
+    //Firebase and facebook variables
     private LoginButton facebookLoginButton;
     private CallbackManager callbackManager;
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth firebaseAuthAppUser;
+
 
     //User for Facebook data
     private UserFacebookData userFacebookData;
-    ///Azure Database connection for contact uploading
-    private MobileServiceClient mobileServiceClientFacebookdataUploading;
-    private MobileServiceTable<UserFacebookData> mobileServiceTableUserFacebookData;
 
-    ///Azure Database connection for AppUser Uploading
-
-    private AppUsers appUsers;
-    private MobileServiceClient mobileServiceClientAppUsersUploading;
-    private  MobileServiceTable<AppUsers> mobileServiceTableAppUsers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
-
-        mAuth=FirebaseAuth.getInstance();
-        mDataBase = FirebaseDatabase.getInstance().getReference().child("LoveCalculator").child("Users");
-
-
         startAuthentication();
     }
+
     private void startAuthentication(){
         callbackManager = CallbackManager.Factory.create();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -154,9 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 else {
-                    CreateNewUserInDatabase();
-                    updateUserProfile();
-                    uploadAppUsersDataToAzure();
 
                     Log.e("LoginActivity:", "Logged in and directing to main activity");
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -178,113 +155,23 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         facebookLoginButton.setVisibility(View.GONE);
     }
-
-    private void updateUserProfile()
-    {
-        initializeAzureTable();
-        uploadFacebookData();
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                finish();
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
-    private void initializeAzureTable() {
-        try {
-            mobileServiceClientFacebookdataUploading = new MobileServiceClient(
-                    getString(R.string.web_address),
-                    this);
-            mobileServiceClientFacebookdataUploading.setAndroidHttpClientFactory(new OkHttpClientFactory() {
-                @Override
-                public OkHttpClient createOkHttpClient() {
-                    OkHttpClient client = new OkHttpClient();
-                    client.setReadTimeout(20, TimeUnit.SECONDS);
-                    client.setWriteTimeout(20, TimeUnit.SECONDS);
-                    return client;
-                }
-            });
-            mobileServiceTableUserFacebookData = mobileServiceClientFacebookdataUploading.getTable(UserFacebookData.class);
-
-
-        } catch (MalformedURLException e) {
-
-        } catch (Exception e) {
-
+    //used this when mobile orientaion is changed
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private void uploadFacebookData() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        userFacebookData.setFirebaseid(firebaseAuth.getCurrentUser().getUid());
-
-        try {
-            mobileServiceTableUserFacebookData.insert(userFacebookData);
-            // asyncUploader();
-
-        }
-        catch (Exception e){
-            Log.e("uploadFBdata ", e.toString());
-        }
-
-    }
-
-
-//Upload App Users data
-
-    private void uploadAppUsersDataToAzure(){
-        initializeAzureTableAppUsers();
-        uploadAppUserData();
-    }
-
-    private void initializeAzureTableAppUsers(){
-        try {
-            mobileServiceClientAppUsersUploading = new MobileServiceClient(
-                    getString(R.string.web_address),
-                    this);
-            mobileServiceClientAppUsersUploading.setAndroidHttpClientFactory(new OkHttpClientFactory() {
-                @Override
-                public OkHttpClient createOkHttpClient() {
-                    OkHttpClient client = new OkHttpClient();
-                    client.setReadTimeout(20, TimeUnit.SECONDS);
-                    client.setWriteTimeout(20, TimeUnit.SECONDS);
-                    return client;
-                }
-            });
-            mobileServiceTableAppUsers = mobileServiceClientAppUsersUploading.getTable(AppUsers.class);
-
-
-        } catch (MalformedURLException e) {
-
-        } catch (Exception e) {
-
-        }
-
-    }
-    private void uploadAppUserData(){
-
-        firebaseAuthAppUser = FirebaseAuth.getInstance();
-        appUsers = new AppUsers();
-        appUsers.setFirebaseid(firebaseAuthAppUser.getCurrentUser().getUid());
-        appUsers.setAppname(getString(R.string.app_id));
-
-        try {
-            mobileServiceTableAppUsers.insert(appUsers);
-
-
-        }
-        catch (Exception e){
-
-        }
-    }
-
-    private void CreateNewUserInDatabase(){
-
-        String user_id = mAuth.getCurrentUser().getUid();
-        DatabaseReference current_user_db = mDataBase.child(user_id);
-        current_user_db.child("Name").setValue(userFacebookData.getUsername());
-        current_user_db.child("FacebookId").setValue(userFacebookData.getFacebookid());
-        current_user_db.child("Email").setValue(userFacebookData.getEmail());
-        current_user_db.child("Gender").setValue(userFacebookData.getGender());
-
-
-
-    }
-
-
 }
