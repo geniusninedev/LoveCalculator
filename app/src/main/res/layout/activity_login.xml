@@ -13,12 +13,25 @@
     tools:context="com.geniusnine.android.lovecalculator.LoginActivity"
     android:weightSum="1"
     android:background="@drawable/romantic">
+    <TextView
+        android:text="Love Calculator"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="#c41603"
+        android:id="@+id/textView" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="156dp"
         android:id="@+id/imageView2"
         android:layout_height="150dp"
-        android:layout_alignParentTop="true" />
+        android:layout_gravity="center"
+        android:background="@mipmap/love"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0.02" />
 
     <TextView
         android:text="मेरी मोहब्बत #की हद ना तय कर पाओगे तुम,
