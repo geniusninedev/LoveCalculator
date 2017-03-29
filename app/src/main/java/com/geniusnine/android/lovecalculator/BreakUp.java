@@ -129,15 +129,12 @@ public class BreakUp extends AppCompatActivity {
                         " you Some day you’ll miss me Like I miss " +
                         "you Some day you’ll need me Like I needed" +
                         " you Some day you’ll Love me… " +
-                        "But I won’t Love you…\n" +
-                        "\n" ,
+                        "But I won’t Love you…" ,
 
                 "It hurts to say goodbye to someone you love " +
-                        "but it’s the best for both of us to move on.\n" +
-                        "\n" ,
+                        "but it’s the best for both of us to move on." ,
                 "Love only one girl or boy at a time." +
-                        " Or break up with the person. DO NOT CHEAT!!!!\n" +
-                        "\n",
+                        " Or break up with the person. DO NOT CHEAT!!!!" ,
                 "\"Never allow someone to be your priority while " +
                         "allowing yourself to be their option.\"",
                 "\"The hottest love has the coldest end.\"",
