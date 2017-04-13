@@ -134,7 +134,7 @@ public class  MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-/*
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +142,7 @@ public class  MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });*/
+        });
 
 
 
@@ -225,6 +225,7 @@ public class  MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_post_app) {
             Intent intent = new Intent(MainActivity.this, RequestApp.class);
+            finish();
             startActivity(intent);
 
         } else if (id == R.id.nav_share) {
@@ -374,7 +375,7 @@ public class  MainActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser()==null){
                     Log.e("ForumMainActivity:", "User was null so directed to Login activity");
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(MainActivity.this, Login.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();
@@ -458,7 +459,8 @@ public class  MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        finish();
+                        FirebaseAuth.getInstance().signOut();
+                        LoginManager.getInstance().logOut();
                     }
                 });
 
@@ -480,10 +482,33 @@ public class  MainActivity extends AppCompatActivity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
-                closeapp();
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("Are you sure you want to close App?");
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                                finish();
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                            }
+                        });
+
+                //Showing the alert dialog
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 return true;
         }
         return super.onKeyDown(keyCode, event);
+
     }
     //used this when mobile orientaion is changed
     public void onConfigurationChanged(Configuration newConfig) {
@@ -582,4 +607,6 @@ public class  MainActivity extends AppCompatActivity
     }
 
 }
+
+
 

@@ -153,7 +153,10 @@ public class RequestApp extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            Intent intent=new Intent(RequestApp.this,MainActivity.class);
+            finish();
+            startActivity(intent);
+
 
         }
 
