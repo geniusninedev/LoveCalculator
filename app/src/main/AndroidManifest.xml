@@ -39,22 +39,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Login"
-            android:label="Login"
+
+        <activity android:name=".Login"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
 
         <activity
             android:name=".SignUp"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:label="Sign Up"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Login" />
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -64,18 +62,6 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
 
         <activity android:name=".RequestApp"
             android:windowSoftInputMode="stateHidden|adjustResize"
@@ -85,18 +71,63 @@
                 android:value=".MainActivity" /></activity>
 
         <activity android:name=".ProposeDaySmsandQuotes"
-            android:label="Love Quotes"/>
+            android:label="Love Quotes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".ProposeDaySmsQuotos"
-            android:label="Love Quotes"  />
+            android:label="Love Quotes"  >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".Sad"
-            android:label="Sad Quotes"/>
+            android:label="Sad Quotes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".SadShayari"
-            android:label="Sad Quotes" />
+            android:label="Sad Quotes" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".Break"
-            android:label="BreakUp Quotes"/>
+            android:label="BreakUp Quotes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".BreakUp"
-            android:label="BreakUp Quotes"/>
+            android:label="BreakUp Quotes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
+
+        <activity android:name=".Forum.NewPostActivity"
+            android:label="Add New Post">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Forum.ForumActivity" />
+        </activity>
+        <activity android:name=".Forum.PostDetailActivity"
+            android:label="Comment">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Forum.ForumActivity" />
+        </activity>
+
+        <activity android:name=".Forum.ForumActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="Forum">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

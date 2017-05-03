@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.geniusnine.android.myapplication.Login">
+    tools:context="com.geniusnine.android.lovecalculator.Login">
+<!--
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+-->
 
     <ScrollView
         android:layout_width="match_parent"
