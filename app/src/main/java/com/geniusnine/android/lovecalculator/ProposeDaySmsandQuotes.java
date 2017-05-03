@@ -11,6 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 /**
  * Created by Supriya on 08-02-2017.
  */
@@ -24,7 +28,10 @@ protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_propose_day_status);
 
-
+        MobileAds.initialize(ProposeDaySmsandQuotes.this, getString(R.string.ads_app_id));
+        AdView mAdView = (AdView)this.findViewById(R.id.adViewPropose);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         listView=(ListView)findViewById(R.id.listViewRoseDay);
         textViewRose=(TextView)findViewById(R.id.textViewRose);
         String[] values = new String[] {

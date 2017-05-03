@@ -10,6 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 public class BreakUp extends AppCompatActivity {
     ListView listView;
     @Override
@@ -17,6 +21,10 @@ public class BreakUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_propose_day_status);
 
+        MobileAds.initialize(BreakUp.this, getString(R.string.ads_app_id));
+        AdView mAdView = (AdView)this.findViewById(R.id.adViewPropose);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         listView=(ListView)findViewById(R.id.listViewRoseDay);
 
         String[] values = new String[] {
